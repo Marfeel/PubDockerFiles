@@ -1,0 +1,4 @@
+Host nfs*
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    ServerAliveInterval 60
