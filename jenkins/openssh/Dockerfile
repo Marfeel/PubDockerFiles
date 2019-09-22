@@ -2,7 +2,11 @@ FROM ubuntu:18.04
 
 RUN \
   apt-get -y update && \
-  apt-get -y install openssh-client make
+  apt-get -y install \
+    openssh-client \
+    make \
+    pssh && \
+  rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -g 999 docker \
   && useradd -d /home/jenkins -m -r -u 1004 -g docker jenkins
