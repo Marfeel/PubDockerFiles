@@ -12,6 +12,7 @@ automatic build with the tag "latest".
 
 #To use in docker-compose.yml context:
 
+```
 version '2.2':
 services:
   nginx:
@@ -28,8 +29,9 @@ services:
       - esnet
 networks:
   esnet:
+```
 
-Mountable directories:
+Mountable directories:  
 ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
 # Pull image from dockerhub:
