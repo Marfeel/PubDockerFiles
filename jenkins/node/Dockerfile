@@ -1,4 +1,4 @@
-FROM node:8.10.0-stretch
+FROM node:12.13.0-buster
 
 RUN echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
     groupadd -g 1004 jenkins && \
