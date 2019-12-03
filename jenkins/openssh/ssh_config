@@ -5,3 +5,8 @@ Host *
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h-%p
     ControlPersist 600
+
+Host github.com
+    User git
+    IdentityFile ~/.ssh/github_rsa
+    StrictHostKeyChecking yes
