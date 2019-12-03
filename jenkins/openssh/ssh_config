@@ -2,3 +2,6 @@ Host *
     IdentityFile ~/.ssh/id_rsa
     StrictHostKeyChecking no
     ServerAliveInterval 60
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h-%p
+    ControlPersist 600
