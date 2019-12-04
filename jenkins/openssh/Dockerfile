@@ -5,6 +5,7 @@ RUN \
   apt-get -y install \
     openssh-client \
     make \
+    git \
     pssh && \
   rm -rf /var/lib/apt/lists/*
 
@@ -13,5 +14,6 @@ RUN groupadd -g 999 docker \
   && install -g 999 -o 1004 -d -m 0750 /home/jenkins/.ssh
 
 COPY --chown=1004:999 ssh_config /home/jenkins/.ssh/config
+COPY --chown=1004:999 known_hosts /home/jenkins/.ssh/known_hosts
 
 USER 1004:999
