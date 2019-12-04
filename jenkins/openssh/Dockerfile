@@ -6,6 +6,7 @@ RUN \
     openssh-client \
     make \
     git \
+    rsync  \
     pssh && \
   rm -rf /var/lib/apt/lists/*
 
