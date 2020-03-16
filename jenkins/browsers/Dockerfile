@@ -76,7 +76,7 @@ RUN apt-get update && \
 		gem install sass
 
 #Firefox
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF316E81A155146718A6FBD7A6DCF7707EBC211F  \
+RUN curl -s 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xAF316E81A155146718A6FBD7A6DCF7707EBC211F&fingerprint=on&op=index' | apt-key add - \
   && echo "deb http://ppa.launchpad.net/ubuntu-mozilla-security/ppa/ubuntu trusty main" >> /etc/apt/sources.list.d/firefox.list \
   && apt-get update -qqy \
   && apt-get -qqy --no-install-recommends install \
