@@ -140,10 +140,10 @@ create_repo() {
 
     full_repo_path="${GIT_SERVER_PATH}/data/users/${git_ssh_user}/${repository}"
 
-    if git -C "$full_repo_path" rev-parse --is-bare-repository 2&> /dev/null; then
+    if git -C "$full_repo_path" rev-parse --is-bare-repository &>/dev/null; then
         log "WARN: ${repository} repository for user ${git_ssh_user} already exists"
     elif [ -d "${full_repo_path}" ]; then
-        error "${full_repo_path} exists and is not a git bare repository"
+        error "${full_repo_path} exists and is not a git bare repository!"
     else
         git init --bare "${full_repo_path}"
         log "${repository} repository for user ${git_ssh_user} created"
