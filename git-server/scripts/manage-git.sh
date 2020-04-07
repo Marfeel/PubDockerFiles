@@ -146,6 +146,7 @@ create_repo() {
         error "${full_repo_path} exists and is not a git bare repository!"
     else
         git init --bare "${full_repo_path}"
+        chown -R "${git_ssh_user}":"${git_ssh_user}" "${full_repo_path}"
         log "${repository} repository for user ${git_ssh_user} created"
     fi
 }
