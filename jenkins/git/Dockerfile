@@ -18,12 +18,13 @@ ARG user_home=/home/${user}
 
 COPY --from=yq /usr/bin/yq /usr/bin/yq
 COPY entrypoint.sh /
+COPY known_hosts "${user_home}"/.ssh/known_hosts
+COPY ssh_config "${user_home}"/.ssh/config
 
 RUN getent group ${gid} \
   && delgroup $(getent group ${gid} | cut -d: -f1) \
   && addgroup -g ${gid} ${group} \
   && adduser -h ${user_home} -u ${uid} -G ${group} -s /bin/bash -D ${user} \
-  && mkdir -p ${user_home}/.ssh \
   && chown -R ${uid}:${gid} ${user_home}/.ssh \
   && chmod +x /entrypoint.sh /usr/bin/yq
 
@@ -39,8 +40,6 @@ RUN apk --update add --no-cache \
   && chmod +x /usr/bin/dumb-init \
   && apk del wget
 
-USER ${user}
 
-COPY --chown=${uid}:${gid} known_hosts "${user_home}"/.ssh/known_hosts
-COPY --chown=${uid}:${gid} ssh_config "${user_home}"/.ssh/config
+USER ${user}
 
