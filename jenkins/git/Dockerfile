@@ -8,6 +8,7 @@ RUN yq --version
 FROM alpine:3.11
 
 ARG DUMB_INIT_VERSION=1.2.2
+ARG ARGOCD_VERSION=v1.5.2
 ARG user=jenkins
 ARG group=docker
 ARG uid=1004
@@ -37,9 +38,11 @@ RUN apk --update add --no-cache \
     git \
     openssh-client \
   && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 \
-  && chmod +x /usr/bin/dumb-init \
+  && wget -O /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
+  && chmod +x /usr/bin/dumb-init /usr/local/bin/argocd \
   && apk del wget
 
 
 USER ${user}
 
+ENV USER=${user}
