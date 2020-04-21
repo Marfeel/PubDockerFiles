@@ -39,8 +39,8 @@ RUN apk --update add --no-cache \
   && chmod +x /usr/bin/dumb-init \
   && apk del wget
 
-USER ${user}
-
 COPY --chown=${uid}:${gid} known_hosts "${user_home}"/.ssh/known_hosts
 COPY --chown=${uid}:${gid} ssh_config "${user_home}"/.ssh/config
+
+USER ${user}
 
