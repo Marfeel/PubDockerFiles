@@ -7,3 +7,4 @@ A git client jenkins image similar to marfeel/jenkins-openssh but
 - replaces some  pipeline tools not used with docker builds (no pssh and no rsync or make for instance) with those that do:
   - docker-cli
   - aws-cli
+  - hub (a Github cli)
