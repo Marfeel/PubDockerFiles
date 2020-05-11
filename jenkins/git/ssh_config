@@ -8,5 +8,4 @@ Host *
 
 Host github.com
     User git
-    IdentityFile ~/.ssh/github_rsa
     StrictHostKeyChecking yes
