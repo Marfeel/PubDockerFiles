@@ -48,6 +48,7 @@ RUN apk --update add --no-cache \
   && wget -O /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
   && chmod +x /usr/bin/dumb-init /usr/local/bin/argocd \
   && pip3 install --upgrade awscli==${AWSCLI_VERSION} \
+  && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing hub \
   && apk del wget py3-pip
 
 USER ${user}
