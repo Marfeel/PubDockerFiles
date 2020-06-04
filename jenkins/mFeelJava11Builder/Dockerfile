@@ -17,21 +17,23 @@ COPY ssh_config "${USER_HOME}"/.ssh/config
 RUN ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 RUN addgroup --gid ${GID} ${GROUP} && \
     adduser -q --no-create-home --disabled-login --disabled-password --home ${USER_HOME} --uid ${UID} --gid ${GID} --gecos "${USER}" --shell /bin/bash ${USER} && \
-    chown -R ${UID}:${GID} ${USER_HOME}/.ssh
+    chown -R ${UID}:${GID} ${USER_HOME}/.ssh && \
+    chown ${UID}:${GID} ${USER_HOME}/
 
 RUN apt-get update && \
     apt-get install -y \
-            git \
-            wget \
             apt-transport-https \
             ca-certificates \
             curl \
-            gnupg-agent \
-            software-properties-common \
             gcc \
-            unzip \
+            git \
+            gnupg-agent \
+            hub \
             jq \
-            vim
+            software-properties-common \
+            unzip \
+            vim \
+            wget
 
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
@@ -49,5 +51,7 @@ RUN curl -Ls https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_
 RUN curl -Ls https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64 \
          -o /usr/local/bin/argocd && \
     chmod a+x /usr/local/bin/argocd
+
+USER ${USER}
 
 CMD ["/bin/bash"]
