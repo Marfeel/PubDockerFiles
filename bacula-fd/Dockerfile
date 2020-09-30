@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-MAINTAINER Francesc Sanjuán <francesc.sanjuan@fametec.com.br>
-
 ENV BACULA_VERSION 9.4.4
 
 ENV BACULA_KEY 5cee4d079821e
@@ -19,7 +17,7 @@ RUN	sed -i s/BACULA_VERSION/$(echo $BACULA_VERSION)/g /etc/apt/sources.list.d/ba
 
 RUN echo "bacula-mysql	bacula-mysql/dbconfig-install	boolean	false" | debconf-set-selections
 
-RUN apt-get update && apt-get install -y bacula-mysql --no-install-recommends
+RUN apt-get update && apt-get install -y bacula-mysql --no-install-recommends postgresql-client-11 liblzo2-2
 
 EXPOSE 9102/tcp
 
