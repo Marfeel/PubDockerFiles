@@ -7,4 +7,3 @@ RUN tar zxvf /tmp/mysqlrouter_exporter_linux_x86_64.tar.gz -C /tmp && \
     chmod a+x /usr/local/bin/mysqlrouter_exporter
 
 ENTRYPOINT ["mysqlrouter_exporter"]
-
