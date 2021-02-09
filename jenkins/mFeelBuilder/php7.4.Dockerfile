@@ -1,8 +1,8 @@
-FROM maven:3.6.3-jdk-11
+FROM php:7.4.15-cli-buster
 
 ARG YQ_VERSION=3.3.0
 ARG ARGOCD_VERSION=1.5.2
-ARG GRAALVM_VERSION=19.3.1
+ARG COMPOSER_VERSION=2.0.9
 
 ARG USER=jenkins
 ARG GROUP=docker
@@ -10,13 +10,8 @@ ARG UID=1004
 ARG GID=999
 ARG USER_HOME=/home/${USER}
 
-ENV MAVEN_CONFIG=${USER_HOME}/.m2
-ENV MAVEN_HOME=${USER_HOME}
-ENV GRAALVM_HOME=/usr/share/graalvm
-
 COPY ssh_config "${USER_HOME}"/.ssh/config
 
-RUN ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 RUN addgroup --gid ${GID} ${GROUP} && \
     adduser -q --no-create-home --disabled-login --disabled-password --home ${USER_HOME} --uid ${UID} --gid ${GID} --gecos "${USER}" --shell /bin/bash ${USER} && \
     chown -R ${UID}:${GID} ${USER_HOME}/.ssh && \
@@ -32,10 +27,24 @@ RUN apt-get update && \
             gnupg-agent \
             hub \
             jq \
+            libfreetype6-dev \
+            libjpeg62-turbo-dev \
+            libonig-dev \
+            libpng-dev libxpm-dev \
+            libprotobuf-dev \
+            libprotobuf17 \
+            libprotobuf17 \
+            libtool \
+            libwebp-dev \
+            libxml2-dev \
+            make \
+            procps \
             software-properties-common \
             unzip \
             vim \
             wget
+
+RUN ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
@@ -55,13 +64,19 @@ RUN curl -Ls https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VER
     chmod a+x /usr/local/bin/argocd
 
 RUN curl -Ls https://deb.nodesource.com/setup_14.x | bash && \
-         apt-get install nodejs
+         apt-get install -y nodejs
 
-RUN mkdir -p ${GRAALVM_HOME} && \
-    curl -Ls https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALVM_VERSION}.tar.gz \
-         -o /tmp/graalvm.tar.gz && \
-    tar -zxf /tmp/graalvm.tar.gz -C "${GRAALVM_HOME}" --strip-components=1 && \
-    rm -fr /tmp/graalvm.tar.gz
+RUN pecl install redis && docker-php-ext-enable redis
+
+RUN docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp
+
+RUN docker-php-ext-install pdo pdo_mysql soap gd bcmath mbstring pcntl
+
+RUN curl -Ls https://getcomposer.org/download/2.0.9/composer.phar -o /usr/local/bin/composer && \
+    chmod a+x /usr/local/bin/composer
 
 USER ${USER}
 
