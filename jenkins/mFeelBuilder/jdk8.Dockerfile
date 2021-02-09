@@ -1,4 +1,4 @@
-FROM maven:3.6-jdk-11
+FROM maven:3.6.3-jdk-8
 
 ARG YQ_VERSION=3.3.0
 ARG ARGOCD_VERSION=1.5.2
@@ -53,6 +53,9 @@ RUN curl -Ls https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_
 RUN curl -Ls https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64 \
          -o /usr/local/bin/argocd && \
     chmod a+x /usr/local/bin/argocd
+
+RUN curl -Ls https://deb.nodesource.com/setup_14.x | bash && \
+         apt-get install nodejs
 
 RUN mkdir -p ${GRAALVM_HOME} && \
     curl -Ls https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALVM_VERSION}.tar.gz \

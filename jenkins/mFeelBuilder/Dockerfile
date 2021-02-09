@@ -1,4 +1,4 @@
-FROM maven:3.6-jdk-11
+FROM maven:3.6.3-jdk-11
 
 ARG YQ_VERSION=3.3.0
 ARG ARGOCD_VERSION=1.5.2
