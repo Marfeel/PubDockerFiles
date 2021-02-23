@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-ARG TF_VERSION="0.12.24"
+ARG TF_VERSION="0.14.05"
 
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
