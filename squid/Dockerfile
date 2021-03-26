@@ -111,8 +111,8 @@ RUN mv /etc/squid/squid.conf /etc/squid/squid.conf.old
 
 ADD squid.conf /etc/squid/squid.conf
 
-RUN mkdir -p /var/spool/cache/squid /var/log/squid && \
-    chown -R proxy:proxy /var/spool/cache/squid && \
+RUN mkdir -p /var/spool/squid/cache /var/log/squid && \
+    chown -R proxy:proxy /var/spool/squid && \
     chown -R proxy:proxy /var/log/squid && \
     chown -R proxy:proxy /usr/lib/squid && \
     /usr/sbin/squid -N -f /etc/squid/squid.conf -z
