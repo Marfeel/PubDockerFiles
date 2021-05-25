@@ -31,6 +31,3 @@ RUN curl -Ls https://storage.googleapis.com/kubernetes-release/release/v${K8S_VE
     echo 'source <(kubectl completion bash)' >> ~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bashrc && \
     echo 'complete -F __start_kubectl k' >>~/.bashrc
-
-ENTRYPOINT ["kubectl"]
-CMD ["help"]
