@@ -22,4 +22,4 @@ RUN cd /usr/local/bin \
   &&  ln helm helm2
 
 # Switch back to non-root user
-USER argocd
+USER 999
