@@ -8,7 +8,7 @@ RUN git clone -b ${HEL_SOPS_GO_VER} --depth=1 https://github.com/camptocamp/helm
   && cd helm-sops \
   && go build
 
-FROM argoproj/argocd:${ARGOCD_SRC_IMAGE_TAG}
+FROM quay.io/argoproj/argocd:${ARGOCD_SRC_IMAGE_TAG}
 
 # Switch to root for the ability to perform install
 USER root
