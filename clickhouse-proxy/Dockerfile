@@ -8,6 +8,7 @@ ENV CLICKHOUSE_PROXY_VERSION=1.14.0
 ENV TZ=UTC
 
 RUN apt update && apt install -y make gcc musl-dev git golang-${GOLANG_VERSION} tzdata wget && \
+    rm -rf /var/lib/apt/lists/* && \
     ln -s /usr/lib/go-${GOLANG_VERSION}/bin/go /usr/local/bin/go && \
     go get golang.org/x/lint/golint && \
     mkdir -p /go/src/github.com/Vertamedia/chproxy
