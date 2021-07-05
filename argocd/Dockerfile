@@ -1,6 +1,6 @@
-ARG ARGOCD_SRC_IMAGE_TAG="v2.0.1"
+ARG ARGOCD_SRC_IMAGE_TAG="v2.0.4"
 
-FROM golang:1.15.2 as builder
+FROM golang:1.16 as builder
 
 ARG HEL_SOPS_GO_VER=20201003-1
 
