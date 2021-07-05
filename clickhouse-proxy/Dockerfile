@@ -1,18 +1,21 @@
 FROM ubuntu:20.04 AS build
 
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=UTC
-ENV CLICKHOUSE_PROXY_VERSION=1.14.0
+ARG CLICKHOUSE_PROXY_VERSION=1.14.0
+ARG GOLANG_VERSION=1.16
 
-RUN apt update && apt install -y make gcc musl-dev git golang-1.16 tzdata wget && \
-    ln -s /usr/lib/go-1.16/bin/go /usr/local/bin/go && \
+ENV CLICKHOUSE_PROXY_VERSION=1.14.0
+ENV TZ=UTC
+
+RUN apt update && apt install -y make gcc musl-dev git golang-${GOLANG_VERSION} tzdata wget && \
+    ln -s /usr/lib/go-${GOLANG_VERSION}/bin/go /usr/local/bin/go && \
     go get golang.org/x/lint/golint && \
     mkdir -p /go/src/github.com/Vertamedia/chproxy
 
 WORKDIR /go/src/github.com/Vertamedia/chproxy
 
-RUN wget https://github.com/Vertamedia/chproxy/archive/refs/tags/v1.14.0.tar.gz -O /tmp/v1.14.0.tar.gz && \
-    tar zxvf /tmp/v1.14.0.tar.gz --strip-components=1 -C /go/src/github.com/Vertamedia/chproxy && \
+RUN wget https://github.com/Vertamedia/chproxy/archive/refs/tags/v${CLICKHOUSE_PROXY_VERSION}.tar.gz -O /tmp/v${CLICKHOUSE_PROXY_VERSION}.tar.gz && \
+    tar zxvf /tmp/v${CLICKHOUSE_PROXY_VERSION}.tar.gz --strip-components=1 -C /go/src/github.com/Vertamedia/chproxy && \
     make release-build
 
 FROM ubuntu:20.04
