@@ -10,7 +10,9 @@ RUN apt-get update && \
 	apt-get install -y wget gnupg && \
 	wget -c https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc -O /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
-	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
+	apt-get install -y docker.io && \
+	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc && \
+	rm -rf /var/lib/apt/lists/*
 
 COPY bacula-repo.list /etc/apt/sources.list.d/bacula-repo.list
 
