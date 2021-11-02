@@ -15,6 +15,7 @@ ENV MAVEN_HOME=${USER_HOME}
 ENV GRAALVM_HOME=/usr/share/graalvm
 
 COPY ssh_config "${USER_HOME}"/.ssh/config
+COPY jdk8.Dockerfile "${USER_HOME}"/Dockerfile
 
 RUN ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 RUN addgroup --gid ${GID} ${GROUP} && \
@@ -39,7 +40,7 @@ RUN apt-get update && \
 
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
-    apt-get update && apt-get install docker-ce-cli
+    apt-get update && apt-get install -y docker-ce-cli
 
 RUN curl -Ls https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
     unzip -q /tmp/awscliv2.zip -d /tmp && \
