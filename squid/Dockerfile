@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV TZ="UTC"
-ARG SQUID_VERSION="4.14"
+ARG SQUID_VERSION="4.17"
 ARG CA_SUBJECT="/C=ES/ST=Barcelona/L=Barcelona/O=Marfeel Solutions, S.L./OU=SysOps Team/CN=squid.mrf.io/emailAddress=ops@marfeel.com"
 
 RUN apt-get update && \
@@ -92,7 +92,7 @@ RUN mkdir -p /etc/squid/ssl_cert && \
       -new \
       -newkey rsa:2048 \
       -sha256 \
-      -days 3650 \
+      -days 36500 \
       -nodes \
       -x509 \
       -extensions v3_ca \
