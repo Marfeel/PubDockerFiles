@@ -2,13 +2,14 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV TZ="UTC"
-ARG SQUID_VERSION="4.17"
+ARG SQUID_VERSION="5.2"
 ARG CA_SUBJECT="/C=ES/ST=Barcelona/L=Barcelona/O=Marfeel Solutions, S.L./OU=SysOps Team/CN=squid.mrf.io/emailAddress=ops@marfeel.com"
 
 RUN apt-get update && \
     apt-get -y install \
         build-essential \
         curl \
+        git \
         libssl-dev \
         libxml2-dev \
         libltdl-dev \
@@ -20,7 +21,7 @@ RUN apt-get -y install \
     autoconf automake autopoint autotools-dev bsdmainutils cdbs comerr-dev debhelper dh-apparmor \
     dh-autoreconf dh-strip-nondeterminism dh-translations distro-info-data dwz ed gettext gettext-base groff-base \
     icu-devtools intltool intltool-debian jq krb5-multidev libarchive-zip-perl libbsd0 libcap-dev libcppunit-1.15-0 \
-    libcppunit-dev libcroco3 libdb-dev libdb5.3-dev libdebhelper-perl libecap3-dev libelf1 \
+    libcppunit-dev libcroco3 libtdb-dev libdb-dev libdb5.3-dev libdebhelper-perl libecap3-dev libelf1 \
     libencode-locale-perl libevent-2.1-7 libexpat1-dev libfile-listing-perl \
     libfile-stripnondeterminism-perl libfile-which-perl libgmp-dev libgmpxx4ldbl libgnutls-dane0 libgnutls-openssl27 \
     libgnutls28-dev libgnutlsxx28 libgssrpc4 libhtml-parser-perl libhtml-tagset-perl libhtml-tree-perl \
@@ -33,7 +34,10 @@ RUN apt-get -y install \
     po-debconf python3 python3-minimal python3-pkg-resources python3-scour python3-six python3.8 python3.8-minimal scour
 
 RUN mkdir -p /tmp/squid && \
-    curl -Ls http://www.squid-cache.org/Versions/v4/squid-${SQUID_VERSION}.tar.gz | tar -zx -C /tmp/squid --strip-components=1 && \
+    curl -Ls http://www.squid-cache.org/Versions/v5/squid-${SQUID_VERSION}.tar.gz | tar -zx -C /tmp/squid --strip-components=1 && \
+    mkdir -p /tmp/squid/src/icmp/tests && \
+    mkdir -p /tmp/squid/tools/squidclient/tests && \
+    mkdir -p /tmp/squid/tools/tests && \
     cd /tmp/squid && \
     ./configure \
       --build=x86_64-linux-gnu \
@@ -84,7 +88,7 @@ RUN mkdir -p /tmp/squid && \
       --with-openssl \
       --with-pidfile=/var/run/squid.pid \
       --with-swapdir=/var/spool/squid && \
-    make && \
+    make -j8 && \
     make install
 
 RUN mkdir -p /etc/squid/ssl_cert && \
