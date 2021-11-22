@@ -88,7 +88,7 @@ RUN mkdir -p /tmp/squid && \
       --with-openssl \
       --with-pidfile=/var/run/squid.pid \
       --with-swapdir=/var/spool/squid && \
-    make -j8 && \
+    make && \
     make install
 
 RUN mkdir -p /etc/squid/ssl_cert && \
