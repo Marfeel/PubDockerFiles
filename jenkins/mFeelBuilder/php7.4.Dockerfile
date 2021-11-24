@@ -49,7 +49,7 @@ RUN ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
-    apt-get update && apt-get install -y docker-ce-cli
+    apt-get update && apt-get install -y docker-ce-cli  docker-compose
 
 RUN curl -Ls https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
     unzip -q /tmp/awscliv2.zip -d /tmp && \
