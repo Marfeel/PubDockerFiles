@@ -23,7 +23,7 @@ RUN	sed -i s/BACULA_VERSION/$(echo $BACULA_VERSION)/g /etc/apt/sources.list.d/ba
 RUN echo "bacula-mysql	bacula-mysql/dbconfig-install	boolean	false" | debconf-set-selections
 
 RUN apt-get update && apt-get install -y mongodb-org-shell mongodb-org-tools bacula-mysql --no-install-recommends docker.io && rm -rf /var/lib/apt/lists/*
-
+RUN mkdir -p /var/bacula/backup/mongodb
 EXPOSE 9102/tcp
 
 ENTRYPOINT ["opt/bacula/bin/bacula-fd"]
