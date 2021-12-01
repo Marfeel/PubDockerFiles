@@ -1,4 +1,4 @@
-ARG ARGOCD_SRC_IMAGE_TAG="v2.1.2"
+ARG ARGOCD_SRC_IMAGE_TAG="v2.1.7"
 
 FROM golang:1.16 as builder
 
