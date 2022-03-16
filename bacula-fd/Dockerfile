@@ -3,11 +3,12 @@ FROM ubuntu:18.04
 MAINTAINER Francesc Sanjuán <francesc.sanjuan@fametec.com.br>
 
 ENV BACULA_VERSION 9.4.4
+ENV RESTIC_VERSION 0.12.1
 
 ENV BACULA_KEY 5cee4d079821e
 
 RUN apt-get update && \
-	apt-get install -y wget gnupg restic && \
+	apt-get install -y wget gnupg curl && \
 	wget -c https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc -O /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
@@ -24,6 +25,10 @@ RUN echo "bacula-mysql	bacula-mysql/dbconfig-install	boolean	false" | debconf-se
 
 RUN apt-get update && apt-get install -y mongodb-org-shell mongodb-org-tools bacula-mysql --no-install-recommends docker.io && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /var/bacula/backup/mongodb
+
+RUN curl https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2 -Ls | bunzip2 > /usr/local/bin/restic && \
+    chmod a+x /usr/local/bin/restic
+
 EXPOSE 9102/tcp
 
 ENTRYPOINT ["opt/bacula/bin/bacula-fd"]
