@@ -1,4 +1,4 @@
-FROM bacula-base:latest
+FROM marfeel/bacula-base:latest
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y bacula-cloud-storage
