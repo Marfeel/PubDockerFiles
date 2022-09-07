@@ -1,7 +1,6 @@
 # MySQL docker
  
 This Dockerfile builds an image of MySQL and installs mysql-shell.
-oauth.
 
 ## Setup information
 
