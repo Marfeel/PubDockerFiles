@@ -1,0 +1,12 @@
+# MySQL docker
+ 
+This Dockerfile builds an image of MySQL and installs mysql-shell.
+
+## Setup information
+
+This repo is connected with dockerhub and a commit in master with trigger an
+automatic build with the tag "latest".
+
+# Pull image from dockerhub:
+
+docker pull marfeel/mysql
