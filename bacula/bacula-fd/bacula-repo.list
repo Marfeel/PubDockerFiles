@@ -1,2 +1,2 @@
 # Bacula Community
-deb [arch=amd64] http://www.bacula.org/packages/BACULA_KEY/debs/BACULA_VERSION/bionic/amd64/ bionic main
+deb [arch=amd64] http://www.bacula.org/packages/BACULA_KEY/debs/BACULA_VERSION/jammy/amd64/ jammy main
