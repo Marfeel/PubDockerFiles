@@ -1,4 +1,4 @@
-FROM marfeel/bacula-base:latest
+FROM marfeel/bacula-base:13.0.0-1
 
 MAINTAINER francesc.sanjuan@marfeel.com
 
