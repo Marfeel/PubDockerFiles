@@ -13,7 +13,9 @@ RUN apt-get update && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
 
-RUN wget https://repo.mongodb.org/apt/ubuntu/dists/jammy/mongodb-org/4.4/multiverse/binary-amd64/mongodb-database-tools_100.5.4_amd64.deb && dpkg -i mongodb-database-tools_100.5.4_amd64.deb && rm mongodb-database-tools_100.5.4_amd64.deb
+RUN wget https://repo.mongodb.org/apt/ubuntu/dists/jammy/mongodb-org/4.4/multiverse/binary-amd64/mongodb-database-tools_100.5.4_amd64.deb && \
+    dpkg -i mongodb-database-tools_100.5.4_amd64.deb && \
+    rm mongodb-database-tools_100.5.4_amd64.deb
 
 COPY bacula-repo.list /etc/apt/sources.list.d/bacula-repo.list
 
