@@ -1,0 +1,2 @@
+deb [ arch=amd64 ] http://www.bacula.org/downloads/baculum/stable-11/ubuntu focal main
+deb-src http://www.bacula.org/downloads/baculum/stable-11/ubuntu focal main
