@@ -1,0 +1,3 @@
+
+deb [ arch=amd64 ] http://bacula.org/downloads/baculum/stable/ubuntu bionic main
+deb-src http://bacula.org/downloads/baculum/stable/ubuntu bionic main
