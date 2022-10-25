@@ -1,0 +1,2 @@
+# Bacula Community
+deb [arch=amd64] http://www.bacula.org/packages/BACULA_KEY/debs/BACULA_VERSION/focal/amd64/ focal main

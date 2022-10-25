@@ -1,0 +1,13 @@
+Defaults:www-data !requiretty
+www-data  ALL=NOPASSWD:  /usr/sbin/bconsole
+www-data  ALL=NOPASSWD:  /usr/sbin/bdirjson
+www-data  ALL=NOPASSWD:  /usr/sbin/bsdjson
+www-data  ALL=NOPASSWD:  /usr/sbin/bfdjson
+www-data  ALL=NOPASSWD:  /usr/sbin/bbconsjson
+
+
+www-data  ALL=NOPASSWD:  /opt/bacula/bin/bconsole
+www-data  ALL=NOPASSWD:  /opt/bacula/bin/bdirjson
+www-data  ALL=NOPASSWD:  /opt/bacula/bin/bsdjson
+www-data  ALL=NOPASSWD:  /opt/bacula/bin/bfdjson
+www-data  ALL=NOPASSWD:  /opt/bacula/bin/bbconsjson

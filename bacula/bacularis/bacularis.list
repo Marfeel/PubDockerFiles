@@ -1,0 +1,2 @@
+deb [arch=amd64 signed-by=/usr/share/keyrings/bacularis-archive-keyring.gpg] https://pkgs.bacularis.app/stable/ubuntu jammy main
+deb-src [signed-by=/usr/share/keyrings/bacularis-archive-keyring.gpg] https://pkgs.bacularis.app/stable/ubuntu jammy main
