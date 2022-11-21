@@ -47,6 +47,9 @@ COPY sudoers-baculum /etc/sudoers.d/sudoers-baculum
 COPY messages-web.mo /usr/share/baculum/htdocs/protected/Web/Lang/en/messages.mo
 COPY messages-api.mo /usr/share/baculum/htdocs/protected/API/Lang/en/messages.mo
 
+RUN chown www-data:www-data /etc/baculum/Config-api-apache/ && \
+    chown www-data:www-data /etc/baculum/Config-web-apache/
+
 RUN a2ensite baculum-api && \
     a2ensite baculum-web && \
     a2enmod rewrite
