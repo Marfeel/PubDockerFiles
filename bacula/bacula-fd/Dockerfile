@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-MAINTAINER Marfeel Ops <ops@marfeel.com>
+LABEL maintainer="Marfeel Ops <ops@marfeel.com>"
 
 ENV BACULA_VERSION 13.0.1
 ENV RESTIC_VERSION 0.12.1
