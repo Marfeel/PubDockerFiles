@@ -12,7 +12,7 @@ RUN	sed -i s/BACULA_VERSION/$(echo $BACULA_VERSION)/g /etc/apt/sources.list.d/ba
     sed -i s/BACULA_KEY/$(echo $BACULA_KEY)/g /etc/apt/sources.list.d/bacula-repo.list
 
 RUN apt-get update && \
-    apt-get install -y bacula-cloud-storage-common bacula-cloud-storage-s3
+    apt-get install -y bacula-cloud-storage-common=13.0.1-22081215~jammy bacula-cloud-storage-s3=13.0.1-22081215~jammy
 
 RUN for i in `ls /opt/bacula/bin`; do if test -z /usr/sbin/$i; then ln -s /opt/bacula/bin/$i /usr/sbin/$i; fi; done
 
