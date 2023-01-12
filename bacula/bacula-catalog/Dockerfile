@@ -1,6 +1,6 @@
 FROM mysql:5.7.30
 
-MAINTAINER Marfeel Ops <ops@marfeel.com>
+LABEL maintainer="Marfeel Ops <ops@marfeel.com>"
 
 ENV MYSQL_ROOT_PASSWORD password
 

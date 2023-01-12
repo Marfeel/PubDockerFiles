@@ -1,17 +1,18 @@
 FROM marfeel/bacula-base:13.0.1
 
+ENV BACULA_VERSION 13.0.1
+
+ENV BACULA_KEY 5cee4d079821e
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata curl libc-bin libxml2
 
-RUN wget https://launchpad.net/~nrbrtx/+archive/ubuntu/libssl1/+files/libssl1.1_1.1.1l-0~202207051306~ubuntu22.04.1_amd64.deb && \
-    dpkg -i libssl1.1_1.1.1l-0~202207051306~ubuntu22.04.1_amd64.deb && \
-    rm libssl1.1_1.1.1l-0~202207051306~ubuntu22.04.1_amd64.deb
+COPY bacula-repo.list /etc/apt/sources.list.d/bacula-repo.list
 
-RUN wget https://www.bacula.org/packages/5cee4d079821e/debs/13.0.1/dists/jammy/main/binary-amd64/bacula-cloud-storage-common_13.0.1-22081215~jammy_amd64.deb && \
-    wget https://www.bacula.org/packages/5cee4d079821e/debs/13.0.1/dists/jammy/main/binary-amd64/bacula-cloud-storage-s3_13.0.1-22081215~jammy_amd64.deb && \
-    dpkg -i bacula-cloud-storage-common_13.0.1-22081215~jammy_amd64.deb && \
-    dpkg -i bacula-cloud-storage-s3_13.0.1-22081215~jammy_amd64.deb && \
-    rm bacula-cloud-storage-common_13.0.1-22081215~jammy_amd64.deb && \
-    rm bacula-cloud-storage-s3_13.0.1-22081215~jammy_amd64.deb
+RUN	sed -i s/BACULA_VERSION/$(echo $BACULA_VERSION)/g /etc/apt/sources.list.d/bacula-repo.list && \
+    sed -i s/BACULA_KEY/$(echo $BACULA_KEY)/g /etc/apt/sources.list.d/bacula-repo.list
+
+RUN apt-get update && \
+    apt-get install -y bacula-cloud-storage-common bacula-cloud-storage-s3
 
 RUN for i in `ls /opt/bacula/bin`; do if test -z /usr/sbin/$i; then ln -s /opt/bacula/bin/$i /usr/sbin/$i; fi; done
 
