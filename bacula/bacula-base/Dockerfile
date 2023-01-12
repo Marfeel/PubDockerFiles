@@ -1,7 +1,8 @@
 FROM ubuntu:22.04
 
-ENV BACULA_VERSION 13.0.0
+MAINTAINER Marfeel Ops <ops@marfeel.com>
 
+ENV BACULA_VERSION 13.0.1
 
 ENV BACULA_KEY 5cee4d079821e
 
