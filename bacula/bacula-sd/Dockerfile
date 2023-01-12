@@ -14,7 +14,6 @@ RUN wget https://www.bacula.org/packages/5cee4d079821e/debs/13.0.1/dists/jammy/m
     dpkg -i bacula-cloud-storage-s3_13.0.1-22081215~jammy_amd64.deb && \
     rm bacula-cloud-storage-s3_13.0.1-22081215~jammy_amd64.deb
 
-
 RUN for i in `ls /opt/bacula/bin`; do if test -z /usr/sbin/$i; then ln -s /opt/bacula/bin/$i /usr/sbin/$i; fi; done
 
 ENTRYPOINT ["/opt/bacula/bin/bacula-sd"]
