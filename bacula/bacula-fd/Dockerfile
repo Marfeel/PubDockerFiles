@@ -13,8 +13,8 @@ RUN apt-get update && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
 
-RUN curl -Ls https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
-    unzip -q /tmp/awscliv2.zip -d /tmp && \
+RUN curl -L https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
+    unzip /tmp/awscliv2.zip -d /tmp && \
     /tmp/aws/install && \
     rm -fr /tmp/aw*
 
