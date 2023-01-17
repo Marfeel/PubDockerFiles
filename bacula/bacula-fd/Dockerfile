@@ -8,10 +8,15 @@ ENV RESTIC_VERSION 0.12.1
 ENV BACULA_KEY 5cee4d079821e
 
 RUN apt-get update && \
-	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq openssh-client rsync && \
+	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq unzip && \
 	wget -c https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc -O /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
+
+RUN curl -L https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
+    unzip /tmp/awscliv2.zip -d /tmp && \
+    /tmp/aws/install && \
+    rm -fr /tmp/aw*
 
 RUN wget https://repo.mongodb.org/apt/ubuntu/dists/jammy/mongodb-org/4.4/multiverse/binary-amd64/mongodb-database-tools_100.5.4_amd64.deb && \
     dpkg -i mongodb-database-tools_100.5.4_amd64.deb && \
