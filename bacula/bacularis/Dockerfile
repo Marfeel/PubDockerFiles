@@ -26,6 +26,6 @@ RUN mkdir -p /run/php-fpm/ && \
     service php8.1-fpm start && \
     systemctl enable php8.1-fpm
 
-CMD ["service php8.1-fpm start && apache2ctl", "-D", "FOREGROUND"]
+CMD ["/bin/bash", "-c", "service php8.1-fpm start; apache2ctl -D FOREGROUND"]
 
 EXPOSE 9097
