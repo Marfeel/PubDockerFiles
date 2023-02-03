@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 LABEL maintainer="Marfeel Ops <ops@marfeel.com>"
 
 ENV BACULA_VERSION 13.0.1
-ENV RESTIC_VERSION 0.12.1
+ENV RESTIC_VERSION 0.15.1
 
 ENV BACULA_KEY 5cee4d079821e
 
