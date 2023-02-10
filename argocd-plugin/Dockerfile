@@ -4,6 +4,8 @@ LABEL maintainer="Marfeel SysOps <ops@marfeel.com>"
 
 ARG HELM_SOPS_VER="20220419-3"
 ARG HELM_VERSION="v3.10.1"
+ARG YQ_VERSION="v4.30.7"
+ARG YQ_BINARY="yq_linux_amd64"
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     export TZ=Etc/UTC && \
@@ -16,8 +18,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     tar zxvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
     cp linux-amd64/helm /usr/local/bin/_helm && \
     mkdir -p /home/argocd/cmp-server/config && \
-    chown -R 999 /home/argocd
-
+    chown -R 999 /home/argocd && \
+    wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O /usr/bin/yq &&\
+    chmod +x /usr/bin/yq
 WORKDIR /home/argocd/cmp-server/config/
 
 USER 999
