@@ -5,8 +5,8 @@ LABEL maintainer="Marfeel SysOps <ops@marfeel.com>"
 ARG HELM_SOPS_VER="20220419-3"
 ARG HELM_VERSION="v3.10.1"
 
-RUN DEBIAN_FRONTEND=noninteractive && \
-    TZ=Etc/UTC && \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    export TZ=Etc/UTC && \
     apt update && apt install -y wget awscli && \
     wget -q https://github.com/camptocamp/helm-sops/releases/download/${HELM_SOPS_VER}/helm-sops_${HELM_SOPS_VER}_linux_amd64.tar.gz && \
     tar zxf helm-sops_${HELM_SOPS_VER}_linux_amd64.tar.gz && \
