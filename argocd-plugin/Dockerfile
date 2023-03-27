@@ -9,7 +9,7 @@ ARG YQ_BINARY="yq_linux_amd64"
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     export TZ=Etc/UTC && \
-    apt update && apt install -y wget awscli && \
+    apt update && apt install -y wget awscli curl jq && \
     wget -q https://github.com/camptocamp/helm-sops/releases/download/${HELM_SOPS_VER}/helm-sops_${HELM_SOPS_VER}_linux_amd64.tar.gz && \
     tar zxf helm-sops_${HELM_SOPS_VER}_linux_amd64.tar.gz && \
     mkdir -p /usr/local/bin && \
