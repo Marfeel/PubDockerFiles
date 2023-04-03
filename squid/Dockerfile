@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV TZ="UTC"
-ARG SQUID_VERSION="5.5"
+ARG SQUID_VERSION="5.8"
 ARG CA_SUBJECT="/C=ES/ST=Barcelona/L=Barcelona/O=Marfeel Solutions, S.L./OU=SysOps Team/CN=squid.mrf.io/emailAddress=ops@marfeel.com"
 
 RUN apt-get update && \
