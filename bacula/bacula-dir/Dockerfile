@@ -7,6 +7,11 @@ RUN apt-get update && apt-get install -y \
     openssh-client \
     bsd-mailx
 
+RUN curl -L https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip && \
+    unzip /tmp/awscliv2.zip -d /tmp && \
+    /tmp/aws/install && \
+    rm -fr /tmp/aw*
+
 EXPOSE 9101/tcp
 
 ENTRYPOINT ["/opt/bacula/bin/bacula-dir"]
