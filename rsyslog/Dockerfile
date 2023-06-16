@@ -20,6 +20,12 @@ RUN : \
     && rm -rf /var/lib/apt/lists/* \
     && :
 
-COPY Dockerfile /Dockerfile
+COPY rsyslog.conf /etc/rsyslog.conf
+COPY Dockerfile   /Dockerfile
 
-CMD ["/usr/sbin/rsyslogd", "-n", "-f", "/etc/rsyslog.conf"]
+VOLUME [ "/etc/rsyslog.d" ]
+
+EXPOSE 514/tcp
+EXPOSE 517/udp
+
+CMD [ "/usr/sbin/rsyslogd", "-n", "-f", "/etc/rsyslog.conf" ]
