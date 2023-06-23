@@ -65,7 +65,7 @@ RUN curl -Ls https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VER
 RUN curl -Ls https://deb.nodesource.com/setup_18.x | bash && \
          apt-get install nodejs
 
-RUN gem install bundler
+RUN gem install bundler -v 2.3.26
 
 RUN mkdir -p ${GRAALVM_HOME} && \
     curl -Ls https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALVM_VERSION}.tar.gz \
