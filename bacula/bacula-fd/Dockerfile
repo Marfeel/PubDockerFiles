@@ -33,7 +33,7 @@ RUN curl https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/r
 
 RUN wget https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.30-23/binary/debian/jammy/x86_64/percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
     dpkg -i percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
-    rm -rf percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb
+    rm -f percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb
 
 EXPOSE 9102/tcp
 
