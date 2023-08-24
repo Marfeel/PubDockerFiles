@@ -8,7 +8,7 @@ ENV RESTIC_VERSION 0.15.2
 ENV BACULA_KEY 5cee4d079821e
 
 RUN apt-get update && \
-	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq unzip openssh-client rsync && \
+	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq unzip openssh-client rsync lsb-release libcurl4-openssl-dev libaio1 libev4 && \
 	wget -c https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc -O /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
@@ -30,6 +30,10 @@ RUN mkdir -p /var/bacula/backup/mongodb
 
 RUN curl https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2 -Ls | bunzip2 > /usr/local/bin/restic && \
     chmod a+x /usr/local/bin/restic
+
+RUN wget https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.30-23/binary/debian/jammy/x86_64/percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
+    dpkg -i percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
+    rm -rf percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb
 
 EXPOSE 9102/tcp
 
