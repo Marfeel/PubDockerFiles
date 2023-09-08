@@ -11,6 +11,6 @@ RUN : \
     && :
 
 RUN :\
-    && python3 -m pip install --upgrade pip \
-    && python3 -m pip install greenbone-feed-sync \
+    && python3 -m pip install --no-cache-dir install \
+        greenbone-feed-sync \
     && :
