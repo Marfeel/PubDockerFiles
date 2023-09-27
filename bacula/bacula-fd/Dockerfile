@@ -31,7 +31,7 @@ RUN mkdir -p /var/bacula/backup/mongodb
 RUN curl https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2 -Ls | bunzip2 > /usr/local/bin/restic && \
     chmod a+x /usr/local/bin/restic
 
-RUN wget https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.30-23/binary/debian/jammy/x86_64/percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
+RUN wget https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.34-29/binary/debian/jammy/x86_64/percona-xtrabackup-80_8.0.34-29-1.jammy_amd64.deb && \
     dpkg -i percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb && \
     rm -f percona-xtrabackup-80_8.0.30-23-1.jammy_amd64.deb
 
