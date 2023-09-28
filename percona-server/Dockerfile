@@ -1,4 +1,4 @@
-FROM percona/percona-server:8.0.30
+FROM percona/percona-server:8.0.33-25
 
 USER root
 
