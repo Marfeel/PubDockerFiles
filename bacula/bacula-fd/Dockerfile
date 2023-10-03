@@ -35,6 +35,13 @@ RUN wget https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-
     dpkg -i percona-xtrabackup-80_8.0.34-29-1.jammy_amd64.deb && \
     rm -f percona-xtrabackup-80_8.0.34-29-1.jammy_amd64.deb
 
+RUN gpg --keyserver  hkp://keyserver.ubuntu.com --recv-keys 1C4CBDCDCD2EFD2A && \
+    gpg -a --export CD2EFD2A | apt-key add - && \
+    sh -c 'echo "deb http://repo.percona.com/apt jammy main" >> /etc/apt/sources.list.d/percona.list'
+
+RUN wget http://repo.percona.com/apt/pool/main/q/qpress/qpress_11-3.jammy_amd64.deb && \
+    dpkg -i qpress_11-3.jammy_amd64.deb
+
 EXPOSE 9102/tcp
 
 ENTRYPOINT ["opt/bacula/bin/bacula-fd"]
