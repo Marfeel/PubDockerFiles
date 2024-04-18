@@ -10,6 +10,10 @@ ARG UID=1004
 ARG GID=999
 ARG USER_HOME=/home/${USER}
 
+ENV BUILDKIT_DIR=/opt/buildkit
+ENV BUILDKITD_FLAGS="--root /tmp/buildkit"
+ENV XDG_RUNTIME_DIR=/run/buildkit
+
 COPY ssh_config "${USER_HOME}"/.ssh/config
 COPY php8.1.Dockerfile "${USER_HOME}"/Dockerfile
 
@@ -28,6 +32,7 @@ RUN apt-get update && \
             gnupg-agent \
             hub \
             jq \
+            libcap2-bin \
             libfreetype6-dev \
             libjpeg62-turbo-dev \
             libonig-dev \
@@ -40,7 +45,9 @@ RUN apt-get update && \
             libxml2-dev \
             make \
             procps \
+            runc \
             software-properties-common \
+            uidmap \
             unzip \
             vim \
             wget
@@ -80,6 +87,18 @@ RUN docker-php-ext-install pdo pdo_mysql soap gd bcmath mbstring pcntl
 
 RUN curl -Ls https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar -o /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
+
+RUN : \
+    && mkdir -p ${BUILDKIT_DIR} \
+    && wget -O /tmp/buildkit.tar.gz https://github.com/moby/buildkit/releases/download/v0.13.1/buildkit-v0.13.1.linux-amd64.tar.gz \
+    && tar -xzvf /tmp/buildkit.tar.gz -C ${BUILDKIT_DIR} --strip-components=1 bin/buildctl bin/buildkitd \
+    && wget -O /tmp/rootlesskit.tar.gz https://github.com/rootless-containers/rootlesskit/releases/download/v2.0.2/rootlesskit-x86_64.tar.gz \
+    && tar -xzvf /tmp/rootlesskit.tar.gz -C ${BUILDKIT_DIR} \
+    && :
+
+COPY ./subuid /etc/subuid
+COPY ./subgid /etc/subgid
+COPY --chmod=0775 ./buildctl-daemonless.sh ${BUILDKIT_DIR}/buildctl-daemonless.sh
 
 USER ${USER}
 
