@@ -12,10 +12,13 @@ ARG UID=1004
 ARG GID=999
 ARG USER_HOME=/home/${USER}
 
+ENV BUILDKIT_DIR=/opt/buildkit
+ENV BUILDKITD_FLAGS="--root /tmp/buildkit"
+ENV GRAALVM_HOME=/usr/share/graalvm
 ENV MAVEN_CONFIG=${USER_HOME}/.m2
 ENV MAVEN_HOME=${USER_HOME}
-ENV GRAALVM_HOME=/usr/share/graalvm
 ENV RBENV_HOME=${USER_HOME}/rbenv
+ENV XDG_RUNTIME_DIR=/run/buildkit
 
 RUN mkdir -p "${USER_HOME}"/.ssh/ && ssh-keyscan github.com > "${USER_HOME}"/.ssh/known_hosts
 
@@ -34,6 +37,8 @@ RUN apt-get update && \
             gnupg2 \
             gnupg-agent \
             hub \
+            libcap2-bin \
+            runc \
             jq \
             build-essential \
             zlib1g-dev \
@@ -41,6 +46,7 @@ RUN apt-get update && \
             libreadline-dev \
             libcurl4-openssl-dev \
             software-properties-common \
+            uidmap \
             unzip \
             vim \
             xvfb gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
@@ -86,6 +92,18 @@ COPY ssh_config "${USER_HOME}"/.ssh/config
 RUN chown -R ${UID}:${GID} ${USER_HOME}/.ssh
 
 COPY node18.Dockerfile /Dockerfile
+
+RUN : \
+    && mkdir -p ${BUILDKIT_DIR} \
+    && wget -O /tmp/buildkit.tar.gz https://github.com/moby/buildkit/releases/download/v0.13.1/buildkit-v0.13.1.linux-amd64.tar.gz \
+    && tar -xzvf /tmp/buildkit.tar.gz -C ${BUILDKIT_DIR} --strip-components=1 bin/buildctl bin/buildkitd \
+    && wget -O /tmp/rootlesskit.tar.gz https://github.com/rootless-containers/rootlesskit/releases/download/v2.0.2/rootlesskit-x86_64.tar.gz \
+    && tar -xzvf /tmp/rootlesskit.tar.gz -C ${BUILDKIT_DIR} \
+    && :
+
+COPY ./subuid /etc/subuid
+COPY ./subgid /etc/subgid
+COPY --chmod=0775 ./buildctl-daemonless.sh ${BUILDKIT_DIR}/buildctl-daemonless.sh
 
 USER ${USER}
 
