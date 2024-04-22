@@ -87,6 +87,14 @@ RUN curl -Ls https://getcomposer.org/download/2.0.9/composer.phar -o /usr/local/
     chmod a+x /usr/local/bin/composer
 
 RUN : \
+    && mkdir -p ${XDG_RUNTIME_DIR} \
+    && chown ${UID}:${GID} ${XDG_RUNTIME_DIR} \
+    && chmod 0755 /usr/bin/newuidmap /usr/bin/newgidmap \
+    && setcap cap_setuid=ep /usr/bin/newuidmap \
+    && setcap cap_setgid=ep /usr/bin/newgidmap \
+    && :
+
+RUN : \
     && mkdir -p ${BUILDKIT_DIR} \
     && wget -O /tmp/buildkit.tar.gz https://github.com/moby/buildkit/releases/download/v0.13.1/buildkit-v0.13.1.linux-amd64.tar.gz \
     && tar -xzvf /tmp/buildkit.tar.gz -C ${BUILDKIT_DIR} --strip-components=1 bin/buildctl bin/buildkitd \
