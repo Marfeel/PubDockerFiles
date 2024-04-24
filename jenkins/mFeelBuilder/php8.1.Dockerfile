@@ -9,6 +9,9 @@ ARG GROUP=docker
 ARG UID=1004
 ARG GID=999
 ARG USER_HOME=/home/${USER}
+ARG GO_VERSION=1.21.9
+ARG RUNC_VERSION=1.1.12
+ARG LIBSECCOMP_VERSION=2.5.4
 
 ENV BUILDKIT_DIR=/opt/buildkit
 ENV BUILDKITD_FLAGS="--root /tmp/buildkit"
@@ -45,7 +48,6 @@ RUN apt-get update && \
             libxml2-dev \
             make \
             procps \
-            runc \
             software-properties-common \
             uidmap \
             unzip \
@@ -87,6 +89,35 @@ RUN docker-php-ext-install pdo pdo_mysql soap gd bcmath mbstring pcntl
 
 RUN curl -Ls https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar -o /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
+
+RUN : \
+    && apt update \
+    && apt remove -y runc \
+    && apt install -y gperf \
+    && wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
+    && rm -rf /usr/local/go \
+    && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
+    && export PATH=$PATH:/usr/local/go/bin \
+    && export GOPATH=/tmp/go \
+    && mkdir -p /tmp/go/src/github.com \
+    && mkdir -p /tmp/go/src/github.com/opencontainers \
+    && mkdir -p /tmp/go/src/github.com/seccomp \
+    && cd /tmp/go/src/github.com/seccomp \
+    && wget https://github.com/seccomp/libseccomp/releases/download/v${LIBSECCOMP_VERSION}/libseccomp-${LIBSECCOMP_VERSION}.tar.gz \
+    && tar -xzf libseccomp-${LIBSECCOMP_VERSION}.tar.gz \
+    && cd /tmp/go/src/github.com/seccomp/libseccomp-${LIBSECCOMP_VERSION} \
+    && rm /usr/lib/x86_64-linux-gnu/libseccomp.so.2 \
+    && ./configure --libdir /usr/lib/x86_64-linux-gnu \
+    && make "[V=0|1]" \
+    && make install \
+    && cd /tmp/go/src/github.com/opencontainers \
+    && git clone https://github.com/opencontainers/runc \
+    && cd /tmp/go/src/github.com/opencontainers/runc \
+    && git checkout v${RUNC_VERSION} \
+    && make \
+    && make vendor \
+    && make install \
+    && :
 
 RUN : \
     && mkdir -p ${XDG_RUNTIME_DIR} \
