@@ -9,9 +9,9 @@ ARG GROUP=docker
 ARG UID=1004
 ARG GID=999
 ARG USER_HOME=/home/${USER}
+ARG GO_VERSION=1.21.9
 ARG RUNC_VERSION=1.1.12
 ARG LIBSECCOMP_VERSION=2.5.4
-ARG PKG_CONFIG_PATH=/lib/x86_64-linux-gnu/pkgconfig
 
 ENV BUILDKIT_DIR=/opt/buildkit
 ENV BUILDKITD_FLAGS="--root /tmp/buildkit"
@@ -33,7 +33,6 @@ RUN apt-get update && \
             gcc \
             git \
             gnupg-agent \
-            gperf \
             hub \
             jq \
             libcap2-bin \
@@ -92,13 +91,13 @@ RUN curl -Ls https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar 
     chmod a+x /usr/local/bin/composer
 
 RUN : \
+    && apt update \
     && apt remove -y runc \
-    && apt remove -y --allow-remove-essential libseccomp2 \
-    && wget https://go.dev/dl/go1.21.9.linux-amd64.tar.gz \
+    && apt install -y gperf \
+    && wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
     && rm -rf /usr/local/go \
-    && tar -C /usr/local -xzf go1.21.9.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
     && export PATH=$PATH:/usr/local/go/bin \
-    && go version \
     && export GOPATH=/tmp/go \
     && mkdir -p /tmp/go/src/github.com \
     && mkdir -p /tmp/go/src/github.com/opencontainers \
@@ -107,7 +106,8 @@ RUN : \
     && wget https://github.com/seccomp/libseccomp/releases/download/v${LIBSECCOMP_VERSION}/libseccomp-${LIBSECCOMP_VERSION}.tar.gz \
     && tar -xzf libseccomp-${LIBSECCOMP_VERSION}.tar.gz \
     && cd /tmp/go/src/github.com/seccomp/libseccomp-${LIBSECCOMP_VERSION} \
-    && ./configure --libdir /lib/x86_64-linux-gnu \
+    && rm /usr/lib/x86_64-linux-gnu/libseccomp.so.2 \
+    && ./configure --libdir /usr/lib/x86_64-linux-gnu \
     && make "[V=0|1]" \
     && make install \
     && cd /tmp/go/src/github.com/opencontainers \
