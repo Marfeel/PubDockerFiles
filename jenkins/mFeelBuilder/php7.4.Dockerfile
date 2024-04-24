@@ -90,9 +90,10 @@ RUN curl -Ls https://getcomposer.org/download/2.0.9/composer.phar -o /usr/local/
 
 RUN : \
     && apt remove -y runc \
-    && apt remove -y libseccomp2 --allow-remove-essential \
+    && apt remove -y --allow-remove-essential libseccomp2 \
     && wget https://go.dev/dl/go1.21.9.linux-amd64.tar.gz \
-    && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.9.linux-amd64.tar.gz \
+    && rm -rf /usr/local/go \
+    && tar -C /usr/local -xzf go1.21.9.linux-amd64.tar.gz \
     && export PATH=$PATH:/usr/local/go/bin \
     && go version \
     && export GOPATH=/tmp/go \
