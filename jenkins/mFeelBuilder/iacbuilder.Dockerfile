@@ -111,7 +111,7 @@ RUN curl -L https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/is
 RUN curl -Ls "https://github.com/projectcalico/calicoctl/releases/download/${CALICOCTL_VERSION}/calicoctl" -o /usr/local/bin/calicoctl && \
     chmod a+rx /usr/local/bin/calicoctl
 
-RUN echo $'    StrictHostKeyChecking no\n    IdentityFile ~/.ssh/id_rsa\nHost github.com\n    User git\n    StrictHostKeyChecking yes' >> /etc/ssh/ssh_config
+RUN echo '    StrictHostKeyChecking no\n    IdentityFile ~/.ssh/id_rsa\nHost github.com\n    User git\n    StrictHostKeyChecking yes' >> /etc/ssh/ssh_config
 
 RUN mkdir -p ${USER_HOME}/.ssh/ && \
     mkdir -p ${USER_HOME}/.terraform.d/ && \
