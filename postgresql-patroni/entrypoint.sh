@@ -1,6 +1,6 @@
 #!/bin/sh
 
-readonly CONTAINER_IP=$(hostname --ip-address)
+readonly CONTAINER_IP=${CONTAINER_IP:-$(hostname --ip-address)}
 readonly CONTAINER_API_ADDR="${CONTAINER_IP}:${PATRONI_API_CONNECT_PORT}"
 readonly CONTAINER_POSTGRE_ADDR="${CONTAINER_IP}:5432"
 
