@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 readonly CONTAINER_IP=${CONTAINER_IP:-$(hostname --ip-address)}
 readonly CONTAINER_API_ADDR="${CONTAINER_IP}:${PATRONI_API_CONNECT_PORT}"
