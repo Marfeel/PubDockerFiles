@@ -4,7 +4,7 @@ FROM postgres:16.3
 # Postgresql data dir must be mounted in /data/patroni directory
 
 RUN apt-get update -y \
-    && apt-get install -y python3 python3-pip pipx \
+    && apt-get install -y python3 python3-pip pipx vim-tiny \
     && mkdir /data/patroni -p \
     && chown postgres:postgres /data/patroni \
     && chmod 700 /data/patroni
