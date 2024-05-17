@@ -16,12 +16,6 @@ export PATRONI_SUPERUSER_PASSWORD="$SU_PASS"
 export PATRONI_appuser_PASSWORD="$POSTGRES_APP_ROLE_PASS"
 export PATRONI_appuser_OPTIONS="${PATRONI_admin_OPTIONS:-createdb, createrole}"
 
-exit_container_SIGTERM() {
-  pg_ctl -D $POSTGRESQL_CONTAINER_DATA_DIR/postgresql stop
-  exit 0
-}
-
-#--- trap the SIGTERM signal
-trap 'exit_container_SIGTERM' SIGTERM
+STOPSIGNAL SIGTERM
 
 exec $HOME/.local/bin/patroni /etc/patroni.yml
