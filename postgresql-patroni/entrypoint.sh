@@ -24,4 +24,4 @@ function exit_container_SIGTERM {
 #--- trap the SIGTERM signal
 trap 'exit_container_SIGTERM' SIGTERM
 
-exec $HOME/.local/bin/patroni /etc/patroni.yml
+$HOME/.local/bin/patroni /etc/patroni.yml
