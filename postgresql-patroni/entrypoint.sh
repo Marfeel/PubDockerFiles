@@ -16,4 +16,4 @@ export PATRONI_SUPERUSER_PASSWORD="$SU_PASS"
 export PATRONI_appuser_PASSWORD="$POSTGRES_APP_ROLE_PASS"
 export PATRONI_appuser_OPTIONS="${PATRONI_admin_OPTIONS:-createdb, createrole}"
 
-exec $HOME/.local/bin/patroni /etc/patroni.yml
+$HOME/.local/bin/patroni /etc/patroni.yml
