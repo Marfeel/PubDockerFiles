@@ -8,9 +8,7 @@ RUN apt update \
     && cd pgbouncer \
     && git submodule init \
     && git submodule update \
-    && ls -lash \
     && ./autogen.sh \
-    && dpkg -L openssl \
     && ./configure --without-openssl \
     && make \
     && make install
