@@ -11,7 +11,7 @@ ENV TINI_VERSION v0.19.0
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 
-RUN yum install python3 python3-pip vim-minimal
+RUN yum install python3 python3-pip vim-minimal percona-pgvector_16
 
 RUN chmod +x /tini \
     && mkdir /home/postgres /data/patroni -p \
