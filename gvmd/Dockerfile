@@ -1,4 +1,4 @@
-FROM greenbone/gvmd:22.8.0
+FROM greenbone/gvmd:23.2.0
 
 RUN : \
     && apt-get update \
