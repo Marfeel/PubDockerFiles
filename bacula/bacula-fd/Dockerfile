@@ -8,7 +8,7 @@ ENV RESTIC_VERSION 0.15.2
 ENV BACULA_KEY 5cee4d079821e
 
 RUN apt-get update && \
-	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq unzip openssh-client zstd rsync lsb-release libcurl4-openssl-dev libaio1 libev4 && \
+	apt-get install -y wget bzip2 gnupg openssl curl xmlstarlet jq unzip openssh-client zstd rsync lsb-release libcurl4-openssl-dev libaio1 libev4 partclone xorriso && \
 	wget -c https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc -O /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	apt-key add /tmp/Bacula-4096-Distribution-Verification-key.asc && \
 	rm -f /tmp/Bacula-4096-Distribution-Verification-key.asc
