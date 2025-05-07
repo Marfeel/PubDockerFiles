@@ -11,7 +11,7 @@ ARG USER_HOME=/home/${USER}
 ENV K8S_VERSION=1.18.3
 ENV HELM_VERSION=3.5.4
 ENV GOLANG_VERSION=1.14
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
 ENV SOPS_VERSION=3.5.0
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/lib/go-${GOLANG_VERSION}/bin:$PATH
@@ -38,6 +38,17 @@ RUN curl -Ls https://storage.googleapis.com/kubernetes-release/release/v${K8S_VE
     echo 'source <(kubectl completion bash)' >> ~/.bashrc && \
     echo 'alias k=kubectl' >>~/.bashrc && \
     echo 'complete -F __start_kubectl k' >>~/.bashrc
+
+RUN set -x; cd "$(mktemp -d)" && \
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+    KREW="krew-${OS}_${ARCH}" && \
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" && \
+    tar zxvf "${KREW}.tar.gz" && \
+    ./"${KREW}" install krew && \
+    echo "export PATH=${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> $HOME/.bashrc && \
+    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
+    kubectl krew install slice
 
 RUN pip3 install boto3 certbot
 
