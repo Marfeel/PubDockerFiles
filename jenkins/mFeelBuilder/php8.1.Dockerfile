@@ -78,7 +78,7 @@ RUN curl -Ls https://deb.nodesource.com/setup_14.x | bash && \
 
 RUN pecl install redis && docker-php-ext-enable redis
 
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install mongodb-1.15.0 && docker-php-ext-enable mongodb
 
 RUN docker-php-ext-configure gd \
     --with-freetype \
