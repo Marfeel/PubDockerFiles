@@ -21,6 +21,6 @@ RUN chmod +x /tini \
 
 USER postgres
 
-RUN pip install patroni[psycopg3,zookeeper]
+RUN pip install patroni[psycopg2,zookeeper]
 
 ENTRYPOINT ["/tini", "--", "./entrypoint.sh"]
