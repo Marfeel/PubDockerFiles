@@ -18,4 +18,3 @@ RUN mkdir -m 777 -p /etc/.claude/commands
 USER node
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["--help"]
