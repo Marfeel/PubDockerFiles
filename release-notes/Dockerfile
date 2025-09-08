@@ -13,7 +13,7 @@ WORKDIR /workspace
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN mkdir -m 777 -p /etc/.claude/commands
+RUN mkdir -m +rwx -p /etc/.claude/commands
 
 USER node
 
