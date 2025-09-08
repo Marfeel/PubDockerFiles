@@ -7,13 +7,11 @@ curl -s GET "https://community.marfeel.com/posts/270736.json" \
     | jq -r .raw \
     > /etc/.claude/commands/release-notes.md
 
-claude --dangerously-skip-permissions --allowedTools "/release-notes" -p \
-    "run the /release-notes command, it is a custom command placed in /etc/.claude/commands/" \
-    > ./release-notes.txt
+PROMPT="run the /release-notes command, it is a custom command placed in /etc/.claude/commands/"
 
 jq -n \
     --arg title "$(git remote get-url origin | xargs basename -s .git)" \
-    --rawfile raw release-notes.txt \
+    --rawfile raw <(claude --dangerously-skip-permissions --allowedTools "/release-notes" -p "$PROMPT") \
     --argjson category 925 \
     '{title: $title, raw: $raw, category: $category}' \
 | curl -s --fail -o /dev/null -w "%{http_code}\n" \
